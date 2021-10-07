@@ -1,1 +1,14 @@
-
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/alchemist?serverTimezone=Asia/Seoul
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernates:
+        show_sql: true
+        format_sql: true
