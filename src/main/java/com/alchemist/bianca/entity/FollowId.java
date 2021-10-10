@@ -1,5 +1,6 @@
 package com.alchemist.bianca.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
@@ -7,7 +8,11 @@ import java.io.Serializable;
 
 @Embeddable
 public class FollowId implements Serializable {
-    private Long userId;
+    @Column(name = "following")
+    private Long following;
+
+    @Column(name = "follower")
+    private Long follower;
 
     @Override
     public int hashCode() {
