@@ -1,2 +1,27 @@
-package com.alchemist.bianca.entity.follow;public class Follow {
+package com.alchemist.bianca.entity.follow;
+
+import com.alchemist.bianca.entity.user.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Entity
+@Getter
+@NoArgsConstructor
+public class Follow {
+
+    @EmbeddedId
+    private FollowId followId;
+
+    @MapsId("following")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "following", referencedColumnName = "user_id", updatable = false, insertable = false)
+    private User following;
+
+    @MapsId("follower")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "follower", referencedColumnName = "user_id", updatable = false, insertable = false)
+    private User follower;
+
 }
