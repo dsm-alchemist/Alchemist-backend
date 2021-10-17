@@ -20,4 +20,10 @@ public class RefreshToken {
 
     @TimeToLive
     private Long ttl;
+
+    public RefreshToken update(String token, Long ttl) {
+        this.token = token;
+        this.ttl = ttl;
+        return this;
+    }
 }
