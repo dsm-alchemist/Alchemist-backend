@@ -12,11 +12,11 @@ import javax.persistence.*;
 public class Storage {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long storage_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private User userId;
+    @JoinColumn(name = "email")
+    private User email;
 
     @Column(length = 45)
     private String task;
