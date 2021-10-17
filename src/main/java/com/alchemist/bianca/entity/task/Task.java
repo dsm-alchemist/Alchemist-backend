@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class Task {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long task_id;
 
     @Column(length = 45)
     private String task;
@@ -21,8 +21,8 @@ public class Task {
     private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private User userId;
+    @JoinColumn(name = "email")
+    private User email;
 
     private boolean isDone;
 }
