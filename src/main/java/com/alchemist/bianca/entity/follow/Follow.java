@@ -16,12 +16,12 @@ public class Follow {
 
     @MapsId("following")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "following", referencedColumnName = "user_id", updatable = false, insertable = false)
+    @JoinColumn(name = "following", referencedColumnName = "email", updatable = false, insertable = false)
     private User following;
 
     @MapsId("follower")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "follower", referencedColumnName = "user_id", updatable = false, insertable = false)
+    @JoinColumn(name = "follower", referencedColumnName = "email", updatable = false, insertable = false)
     private User follower;
 
 }
