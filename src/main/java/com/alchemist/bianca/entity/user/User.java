@@ -1,6 +1,8 @@
 package com.alchemist.bianca.entity.user;
 
 import com.alchemist.bianca.entity.follow.Follow;
+import com.alchemist.bianca.entity.storage.Storage;
+import com.alchemist.bianca.entity.task.Task;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +20,6 @@ import java.util.List;
 @AllArgsConstructor
 public class User implements Serializable, UserDetails {
     @Id
-    @GeneratedValue
-    @Column(name = "user_id")
-    private Long user_id;
-
     @Column(length = 50, nullable = false)
     private String email;
 
@@ -38,6 +36,12 @@ public class User implements Serializable, UserDetails {
 
     @OneToMany(mappedBy = "follower", cascade = { CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Follow> follower = new ArrayList<>();
+
+    @OneToMany(mappedBy = "email", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Task> tasks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "email", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Storage> storages = new ArrayList<>();
 
     @Override
     public int hashCode() {
