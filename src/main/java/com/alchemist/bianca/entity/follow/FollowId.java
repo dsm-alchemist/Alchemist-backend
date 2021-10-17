@@ -7,10 +7,10 @@ import java.io.Serializable;
 @Embeddable
 public class FollowId implements Serializable {
     @Column(name = "following")
-    private Long following;
+    private String following;
 
     @Column(name = "follower")
-    private Long follower;
+    private String follower;
 
     @Override
     public int hashCode() {
