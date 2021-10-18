@@ -43,6 +43,13 @@ public class User implements Serializable, UserDetails {
     @OneToMany(mappedBy = "email", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Storage> storages = new ArrayList<>();
 
+    @Builder
+    public User(String email, String password, String name) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+    }
+
     @Override
     public int hashCode() {
         return super.hashCode();
