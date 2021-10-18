@@ -16,9 +16,27 @@ spring:
       hibernates:
         show_sql: true
         format_sql: true
+  mail:
+    title: ${MAIL_TITLE}
+    exp: ${MAIL_EXP}
+    port: ${SMTP_PORT}
+    username: ${SMTP_ADDRESS}
+    password: ${SMTP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
 jwt:
   secret: ${JWT_SECRET}
   access-exp: ${JWT_ACCESS_EXP}
   refresh-exp: ${JWT_REFRESH_EXP}
   header: ${JWT_HEADER}
   prefix: ${JWT_PREFIX}
+
+code:
+  min: ${MIN_VALUE}
+  max: ${MAX_VALUE}
