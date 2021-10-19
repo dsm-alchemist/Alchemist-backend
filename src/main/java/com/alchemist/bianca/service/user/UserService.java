@@ -76,7 +76,7 @@ public class UserService {
     @Transactional
     public void addFollowing(EmailRequest request) {
         User following = userRepository.findById(request.getEmail())
-                .orElseThrow(UserNotFoundException::new)
+                .orElseThrow(UserNotFoundException::new);
         User follower = userRepository.findById(userFacade.getEmail())
                 .orElseThrow(UserNotFoundException::new);
 
