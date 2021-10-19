@@ -1,6 +1,7 @@
 package com.alchemist.bianca.entity.follow;
 
 import com.alchemist.bianca.entity.user.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,5 +24,11 @@ public class Follow {
     @ManyToOne(optional = false)
     @JoinColumn(name = "follower", referencedColumnName = "email", updatable = false, insertable = false)
     private User follower;
+
+    @Builder
+    public Follow (User following, User follower) {
+        this.following = following;
+        this.follower = follower;
+    }
 
 }
