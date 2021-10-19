@@ -110,12 +110,26 @@ public class AuthService {
     }
 
     public TokenResponse tokenRefresh(RefreshTokenRequest request) {
-        if (jwtTokenProvider.validateToken(request.getRefreshToken())){
+        if (jwtTokenProvider.validateToken(request.getRefreshToken())) {
             return refreshTokenRepository.findByToken(request.getRefreshToken())
                     .map(token -> getToken(token.getEmail()))
                     .orElseThrow(ExpiredRefreshTokenException::new);
         }
         throw new InvalidTokenException();
+    }
+
+    public void logout() {
+        refreshTokenRepository.findById(userFacade.getEmail())
+                .ifPresent(refreshTokenRepository::delete);
+    }
+
+    public void deleteAccount() {
+        refreshTokenRepository.findById(userFacade.getEmail())
+                .ifPresent(refreshTokenRepository::delete);
+        userRepository.delete(
+                userRepository.findById(userFacade.getEmail())
+                        .orElseThrow(CredentialsNotFoundException::new)
+        );
     }
 
     private String sendMail(String email) {
@@ -150,13 +164,13 @@ public class AuthService {
         MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
         mDigest.update(password.getBytes());
 
-        byte[] msgStr = mDigest.digest() ;
+        byte[] msgStr = mDigest.digest();
 
-        for(int i=0; i < msgStr.length; i++){
+        for (int i = 0; i < msgStr.length; i++) {
             byte tmpStrByte = msgStr[i];
             String tmpEncTxt = Integer.toString((tmpStrByte & 0xff) + 0x100, 16).substring(1);
 
-            sbuf.append(tmpEncTxt) ;
+            sbuf.append(tmpEncTxt);
         }
 
         return sbuf.toString();
