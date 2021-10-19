@@ -9,6 +9,7 @@ import com.alchemist.bianca.entity.refresh_token.RefreshTokenRepository;
 import com.alchemist.bianca.entity.user.User;
 import com.alchemist.bianca.entity.user.UserRepository;
 import com.alchemist.bianca.exception.*;
+import com.alchemist.bianca.facade.UserFacade;
 import com.alchemist.bianca.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,6 +50,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final VerifyCodeRepository codeRepository;
     private final JavaMailSender mailSender;
+    private final UserFacade userFacade;
 
     public ResponseEntity<TokenResponse> login(LoginRequest request) throws Exception {
         UserDetails user = userRepository.findById(request.getEmail())
@@ -100,7 +102,7 @@ public class AuthService {
     }
 
     public void checkCode(VerifyCodeRequest request) {
-        VerifyCode code = codeRepository.findById(request.getEmail())
+        VerifyCode code = codeRepository.findById(userFacade.getEmail())
                 .orElseThrow(InvalidCodeException::new);
         if (!code.getCode().equals(request.getCode())) {
             throw new UnlikeCodeException();
