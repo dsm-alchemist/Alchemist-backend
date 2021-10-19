@@ -17,7 +17,8 @@ public enum ErrorCode {
     ALREADY_EXIST_EMAIL(400, "Already Exist Email"),
     ALREADY_EXIST_NAME(400, "Already Exist Name"),
     INVALID_CODE(400, "Invalid code"),
-    UNLIKE_CODE(400, "Unlike code");
+    UNLIKE_CODE(400, "Unlike code"),
+    CREDENTIALS_NOT_FOUND(401, "Credentials not found");
 
     private final int status;
     private final String message;
