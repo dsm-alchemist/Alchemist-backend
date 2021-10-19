@@ -19,11 +19,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class AuthService {
 
     @Value("${jwt.refresh.exp}")
     private Long refreshExp;
@@ -49,10 +50,11 @@ public class UserService {
     private final VerifyCodeRepository codeRepository;
     private final JavaMailSender mailSender;
 
-    public ResponseEntity<TokenResponse> login(LoginRequest request) {
+    public ResponseEntity<TokenResponse> login(LoginRequest request) throws Exception {
         UserDetails user = userRepository.findById(request.getEmail())
                 .orElseThrow(UserNotFoundException::new);
-        if (user.getPassword().equals(request.getPassword())) {
+        String password = getEncrypt(request.getPassword());
+        if (user.getPassword().equals(password)) {
             throw new MismatchedPassword();
         }
 
@@ -65,14 +67,14 @@ public class UserService {
         ), HttpStatus.OK);
     }
 
-    public void signUp(SignUpRequest request) {
+    public void signUp(SignUpRequest request) throws Exception {
         if (userRepository.findById(request.getEmail()).isPresent()) {
             throw new AlreadyExistEmailException();
         } else {
             userRepository.save(
                     User.builder()
                             .email(request.getEmail())
-                            .password(request.getPassword()) // 인코딩
+                            .password(getEncrypt(request.getPassword()))
                             .name(request.getName())
                             .build()
             );
@@ -140,4 +142,22 @@ public class UserService {
     private Integer randomCode() {
         return (int) (Math.random() * (max - min) + min);
     }
+
+    private String getEncrypt(String password) throws Exception {
+        StringBuffer sbuf = new StringBuffer();
+        MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
+        mDigest.update(password.getBytes());
+
+        byte[] msgStr = mDigest.digest() ;
+
+        for(int i=0; i < msgStr.length; i++){
+            byte tmpStrByte = msgStr[i];
+            String tmpEncTxt = Integer.toString((tmpStrByte & 0xff) + 0x100, 16).substring(1);
+
+            sbuf.append(tmpEncTxt) ;
+        }
+
+        return sbuf.toString();
+    }
+
 }
