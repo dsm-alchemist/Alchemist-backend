@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Builder
-public class OtherTaskListResponse {
+public class TaskListResponse {
     private final String userName;
     private final List<TaskList> taskList;
 }
