@@ -1,24 +1,20 @@
-package com.alchemist.bianca.entity.follow;
+package com.alchemist.bianca.entity.task;
 
 import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.QTaskList;
 import com.alchemist.bianca.dto.task.response.TaskList;
-import com.alchemist.bianca.entity.task.QTask;
-import com.alchemist.bianca.entity.user.QUser;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.util.StringUtils;
 
-import java.time.LocalDate;
 import java.util.List;
 
-import static com.alchemist.bianca.entity.task.QTask.*;
-import static com.alchemist.bianca.entity.user.QUser.*;
-import static org.springframework.util.StringUtils.*;
+import static com.alchemist.bianca.entity.task.QTask.task1;
+import static com.alchemist.bianca.entity.user.QUser.user;
+import static org.springframework.util.StringUtils.hasText;
 
 @RequiredArgsConstructor
-public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
+public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
@@ -33,8 +29,8 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
                 .from(task1)
                 .join(task1.email, user)
                 .where(
-                    emailEq(request.getEmail()),
-                    task1.date.eq(request.getDate())
+                        emailEq(request.getEmail()),
+                        task1.date.eq(request.getDate())
                 )
                 .fetch();
     }
