@@ -1,11 +1,10 @@
-package com.alchemist.bianca.entity.follow;
+package com.alchemist.bianca.entity.task;
 
 import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.TaskList;
 
-import java.time.LocalDate;
 import java.util.List;
 
-public interface FollowRepositoryCustom {
+public interface TaskRepositoryCustom {
     List<TaskList> getTaskList(TaskRequest request);
 }
