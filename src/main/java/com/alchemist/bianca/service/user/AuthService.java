@@ -33,10 +33,10 @@ public class AuthService {
     @Value("${spring.mail.username}")
     private String mailAddress;
 
-    @Value("${spring.mail.title")
+    @Value("${spring.mail.title}")
     private String title;
 
-    @Value("${spring.mail.exp")
+    @Value("${spring.mail.exp}")
     private Long mailExp;
 
     @Value("${code.min}")
