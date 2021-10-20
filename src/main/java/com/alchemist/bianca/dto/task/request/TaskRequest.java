@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class TaskRequest {
 
-    @NotNull(message = "email은 null일 수 없습니다.")
     @Email
     private final String Email;
 
