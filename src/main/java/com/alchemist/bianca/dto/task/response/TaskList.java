@@ -1,11 +1,9 @@
 package com.alchemist.bianca.dto.task.response;
 
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 public class TaskList {
     private final Long task_id;
     private final String task;
