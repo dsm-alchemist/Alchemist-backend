@@ -53,7 +53,7 @@ public class AuthService {
     private final JavaMailSender mailSender;
     private final UserFacade userFacade;
 
-    public ResponseEntity<TokenResponse> login(LoginRequest request) throws Exception {
+    public ResponseEntity<TokenResponse> login(LoginRequest request) {
         UserDetails user = userRepository.findById(request.getEmail())
                 .orElseThrow(UserNotFoundException::new);
         String password = getEncrypt(request.getPassword());
@@ -85,16 +85,18 @@ public class AuthService {
     }
 
     public void overlapEmail(EmailRequest request) {
-        userRepository.findById(request.getEmail())
-                .orElseThrow(AlreadyExistEmailException::new);
+        if (userRepository.findById(request.getEmail()).isPresent()) {
+            throw new AlreadyExistEmailException();
+        }
     }
 
     public void overlapName(NameRequest request) {
-        userRepository.findByName(request.getName())
-                .orElseThrow(AlreadyExistNameException::new);
+        if (userRepository.findByName(request.getName()).isPresent()) {
+            throw new AlreadyExistNameException();
+        }
     }
 
-    public void getCode(MailSendRequest request) {
+    public void sendCode(EmailRequest request) {
         String address = request.getEmail();
         String code = sendMail(address);
         codeRepository.findById(address)
