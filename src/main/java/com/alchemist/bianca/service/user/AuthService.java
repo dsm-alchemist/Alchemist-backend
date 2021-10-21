@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 @Service
@@ -69,7 +70,7 @@ public class AuthService {
         ), HttpStatus.OK);
     }
 
-    public void signUp(SignUpRequest request) throws Exception {
+    public void signUp(SignUpRequest request) {
         if (userRepository.findById(request.getEmail()).isPresent()) {
             throw new AlreadyExistEmailException();
         } else {
@@ -159,21 +160,25 @@ public class AuthService {
         return (int) (Math.random() * (max - min) + min);
     }
 
-    private String getEncrypt(String password) throws Exception {
-        StringBuffer sbuf = new StringBuffer();
-        MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
-        mDigest.update(password.getBytes());
+    private String getEncrypt(String password) {
+        try {
+            StringBuffer sbuf = new StringBuffer();
+            MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
+            mDigest.update(password.getBytes());
 
-        byte[] msgStr = mDigest.digest();
+            byte[] msgStr = mDigest.digest();
 
-        for (int i = 0; i < msgStr.length; i++) {
-            byte tmpStrByte = msgStr[i];
-            String tmpEncTxt = Integer.toString((tmpStrByte & 0xff) + 0x100, 16).substring(1);
+            for (int i = 0; i < msgStr.length; i++) {
+                byte tmpStrByte = msgStr[i];
+                String tmpEncTxt = Integer.toString((tmpStrByte & 0xff) + 0x100, 16).substring(1);
 
-            sbuf.append(tmpEncTxt);
+                sbuf.append(tmpEncTxt);
+            }
+
+            return sbuf.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException(e.getMessage(), e);
         }
-
-        return sbuf.toString();
     }
 
 }
