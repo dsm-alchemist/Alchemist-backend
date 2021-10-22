@@ -1,6 +1,5 @@
 package com.alchemist.bianca.entity.task;
 
-import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.QTaskList;
 import com.alchemist.bianca.dto.task.response.TaskList;
 import com.alchemist.bianca.facade.UserFacade;
@@ -22,7 +21,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
     private final UserFacade userFacade;
 
     @Override
-    public List<TaskList> getTaskList(TaskRequest request) {
+    public List<TaskList> getTaskList(String userEmail, LocalDate date) {
         return queryFactory
                 .select(new QTaskList(
                         task1.task_id,
@@ -32,8 +31,8 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
                 .from(task1)
                 .join(task1.email, user)
                 .where(
-                        emailEq(request.getEmail()),
-                        task1.date.eq(request.getDate())
+                        emailEq(userEmail),
+                        task1.date.eq(date)
                 )
                 .fetch();
     }
