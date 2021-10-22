@@ -100,6 +100,6 @@ public class TaskService {
     private String getName(String email) {
         return userRepository.findById(email)
                 .orElseThrow(UserNotFoundException::new)
-                .getClass().getName();
+                .getName();
     }
 }
