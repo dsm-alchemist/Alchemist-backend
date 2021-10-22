@@ -47,7 +47,7 @@ public class UserService {
         return new ResponseEntity<>(followings, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<UserListResponse>> getFollowerList() {
+    public ResponseEntity<List<UserListResponse>> getFollowersList() {
         List<UserListResponse> followers = followRepository.findAllByFollowing(userFacade.getEmail())
                 .stream().map(follower -> UserListResponse.builder()
                         .userName(follower.getName())
@@ -58,7 +58,7 @@ public class UserService {
         return new ResponseEntity<>(followers, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<UserListResponse>> getUserList() {
+    public ResponseEntity<List<UserListResponse>> getUsersList() {
         List<UserListResponse> users = userRepository.findAll()
                 .stream().map(user -> UserListResponse.builder()
                         .userName(user.getName())
