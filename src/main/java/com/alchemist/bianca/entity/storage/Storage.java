@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@Builder
 public class Storage {
     @Id
     @GeneratedValue
@@ -22,4 +21,10 @@ public class Storage {
 
     @Column(length = 45, nullable = false)
     private String task;
+
+    @Builder
+    public Storage(String task, User email) {
+        this.task = task;
+        this.email = email;
+    }
 }
