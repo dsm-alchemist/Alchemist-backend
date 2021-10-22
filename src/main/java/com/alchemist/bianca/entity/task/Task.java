@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor
-@Builder
 public class Task {
     @Id
     @GeneratedValue
@@ -30,4 +29,11 @@ public class Task {
 
     @ColumnDefault(value = "false")
     private boolean isDone;
+
+    @Builder
+    public Task(String task, LocalDate date, User email) {
+        this.task = task;
+        this.date = date;
+        this.email = email;
+    }
 }
