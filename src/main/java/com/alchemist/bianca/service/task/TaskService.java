@@ -1,7 +1,6 @@
 package com.alchemist.bianca.service.task;
 
 import com.alchemist.bianca.dto.task.request.AddTaskRequest;
-import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.TaskListResponse;
 import com.alchemist.bianca.dto.task.response.TaskList;
 import com.alchemist.bianca.entity.storage.Storage;
@@ -45,10 +44,10 @@ public class TaskService {
     }
 
     @Transactional
-    public ResponseEntity<TaskListResponse> getOtherTaskList(TaskRequest request) { //파라미터 변경
-        String name = getName(request.getEmail());
+    public ResponseEntity<TaskListResponse> getOtherTaskList(String userEmail, LocalDate date) { //파라미터 변경
+        String name = getName(userEmail);
 
-        List<TaskList> taskList = taskRepository.getTaskList(request);
+        List<TaskList> taskList = taskRepository.getTaskList(userEmail, date);
 
         return new ResponseEntity<>(
                 TaskListResponse.builder()
@@ -58,10 +57,10 @@ public class TaskService {
     }
 
     @Transactional
-    public ResponseEntity<TaskListResponse> getMyTaskList(TaskRequest request) {
+    public ResponseEntity<TaskListResponse> getMyTaskList(LocalDate date) {
         String name = getName(userFacade.getEmail());
 
-        List<TaskList> taskList = taskRepository.getTaskList(request);
+        List<TaskList> taskList = taskRepository.getTaskList(name, date);
 
         return new ResponseEntity<>(
                 TaskListResponse.builder()
