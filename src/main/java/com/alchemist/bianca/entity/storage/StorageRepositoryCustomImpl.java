@@ -2,7 +2,6 @@ package com.alchemist.bianca.entity.storage;
 
 import com.alchemist.bianca.dto.storage.response.QStorageList;
 import com.alchemist.bianca.dto.storage.response.StorageList;
-import com.alchemist.bianca.entity.user.QUser;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
