@@ -1,6 +1,5 @@
 package com.alchemist.bianca.controller.user;
 
-import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.TaskListResponse;
 import com.alchemist.bianca.dto.user.request.EmailRequest;
 import com.alchemist.bianca.dto.user.response.FollowCountResponse;
@@ -13,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -55,8 +55,8 @@ public class UserController {
     }
 
     @GetMapping("/task/{userEmail}")
-    public ResponseEntity<TaskListResponse> getOtherTaskList(@PathVariable @Valid TaskRequest request) {
-        return taskService.getOtherTaskList(request);
+    public ResponseEntity<TaskListResponse> getOtherTaskList(@PathVariable String userEmail, @RequestParam("date") LocalDate date) {
+        return taskService.getOtherTaskList(userEmail, date);
     }
 
     @GetMapping("/account")
