@@ -59,8 +59,7 @@ public class AuthController {
         authService.deleteAccount();
     }
 
-    @DeleteMapping("/logout")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PostMapping("/logout")
     public void logout() {
         authService.logout();
     }
