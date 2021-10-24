@@ -22,14 +22,14 @@ public class AuthController {
         authService.signUp(request);
     }
 
-    @GetMapping("/reduplication/{email}")
-    public String overlapEmail(@PathVariable("email") @Valid EmailRequest request) {
-        return authService.overlapEmail(request);
+    @GetMapping("/reduplication/email/{email}")
+    public String overlapEmail(@PathVariable("email") String email) {
+        return authService.overlapEmail(email);
     }
 
-    @GetMapping("/reduplication/{name}")
-    public String overlapName(@PathVariable("name") @Valid NameRequest request) {
-        return authService.overlapName(request);
+    @GetMapping("/reduplication/name/{name}")
+    public String overlapName(@PathVariable("name") String name) {
+        return authService.overlapName(name);
     }
 
     @PostMapping("/sms-certification/sends")
@@ -39,8 +39,8 @@ public class AuthController {
     }
 
     @GetMapping("/sms-certification/confirms")
-    public String checkCode(@RequestParam("code") @Valid VerifyCodeRequest request) {
-        return authService.checkCode(request);
+    public String checkCode(@RequestParam("code") String code, @RequestParam("email") String email) {
+        return authService.checkCode(code, email);
     }
 
     @PostMapping("/login")
