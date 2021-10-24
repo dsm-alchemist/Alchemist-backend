@@ -25,8 +25,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement()
                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //jwt 사용 시 stateless로 설정
-        /*http
+        http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "");*/
+                .antMatchers(HttpMethod.GET, "/reduplication/{email}").permitAll()
+                .antMatchers(HttpMethod.POST, "/signup").permitAll()
+                .antMatchers(HttpMethod.GET, "/reduplication/{name}").permitAll()
+                .antMatchers(HttpMethod.POST, "/sms-certification/sends").permitAll()
+                .antMatchers(HttpMethod.GET, "/sms-certification/confirms").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.PUT, "/refresh").permitAll()
+                .anyRequest().authenticated()
+                .and().apply(new FilterConfig(jwtTokenProvider, exceptionHandlerFilter));
+
     }
 }
