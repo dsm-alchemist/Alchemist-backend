@@ -23,15 +23,13 @@ public class AuthController {
     }
 
     @GetMapping("/reduplication/{email}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void overlapEmail(@PathVariable("email") @Valid EmailRequest request) {
-        authService.overlapEmail(request);
+    public String overlapEmail(@PathVariable("email") @Valid EmailRequest request) {
+        return authService.overlapEmail(request);
     }
 
     @GetMapping("/reduplication/{name}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void overlapName(@PathVariable("name") @Valid NameRequest request) {
-        authService.overlapName(request);
+    public String overlapName(@PathVariable("name") @Valid NameRequest request) {
+        return authService.overlapName(request);
     }
 
     @PostMapping("/sms-certification/sends")
@@ -41,9 +39,8 @@ public class AuthController {
     }
 
     @GetMapping("/sms-certification/confirms")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void checkCode(@RequestParam("code") @Valid VerifyCodeRequest request) {
-        authService.checkCode(request);
+    public String checkCode(@RequestParam("code") @Valid VerifyCodeRequest request) {
+        return authService.checkCode(request);
     }
 
     @PostMapping("/login")
@@ -51,7 +48,7 @@ public class AuthController {
         return authService.login(request);
     }
 
-    @PostMapping("/refresh")
+    @PutMapping("/refresh")
     public TokenResponse tokenRefresh(@RequestBody @Valid RefreshTokenRequest request) {
         return authService.tokenRefresh(request);
     }
@@ -60,5 +57,11 @@ public class AuthController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccount() {
         authService.deleteAccount();
+    }
+
+    @DeleteMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout() {
+        authService.logout();
     }
 }
