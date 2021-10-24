@@ -27,9 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //jwt 사용 시 stateless로 설정
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/reduplication/{email}").permitAll()
+                .antMatchers(HttpMethod.GET, "/reduplication/email/{email}").permitAll()
                 .antMatchers(HttpMethod.POST, "/signup").permitAll()
-                .antMatchers(HttpMethod.GET, "/reduplication/{name}").permitAll()
+                .antMatchers(HttpMethod.GET, "/reduplication/name/{name}").permitAll()
                 .antMatchers(HttpMethod.POST, "/sms-certification/sends").permitAll()
                 .antMatchers(HttpMethod.GET, "/sms-certification/confirms").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
