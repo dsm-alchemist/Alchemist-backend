@@ -58,7 +58,7 @@ public class AuthService {
         UserDetails user = userRepository.findById(request.getEmail())
                 .orElseThrow(UserNotFoundException::new);
         String password = getEncrypt(request.getPassword());
-        if (user.getPassword().equals(password)) {
+        if (!user.getPassword().equals(password)) {
             throw new MismatchedPassword();
         }
 
@@ -85,18 +85,18 @@ public class AuthService {
         }
     }
 
-    public String overlapEmail(EmailRequest request) {
-        if (userRepository.findById(request.getEmail()).isPresent()) {
+    public String overlapEmail(String email) {
+        if (userRepository.findById(email).isPresent()) {
             throw new AlreadyExistEmailException();
         }
-        return request.getEmail();
+        return email;
     }
 
-    public String overlapName(NameRequest request) {
-        if (userRepository.findByName(request.getName()).isPresent()) {
+    public String overlapName(String name) {
+        if (userRepository.findByName(name).isPresent()) {
             throw new AlreadyExistNameException();
         }
-        return request.getName();
+        return name;
     }
 
     @Async(value = "mailSenderExecutor")
@@ -108,14 +108,14 @@ public class AuthService {
                 .ifPresent(certification -> codeRepository.save(certification.update(code, mailExp)));
     }
 
-    public String checkCode(VerifyCodeRequest request) {
-        VerifyCode code = codeRepository.findById(userFacade.getEmail())
+    public String checkCode(String code, String email) {
+        VerifyCode verifyCode = codeRepository.findById(email)
                 .orElseThrow(InvalidCodeException::new);
-        if (!code.getCode().equals(request.getCode())) {
+        if (!code.equals(verifyCode.getCode())) {
             throw new UnlikeCodeException();
+        } else {
+            return code;
         }
-
-        return request.getCode();
     }
 
     public TokenResponse tokenRefresh(RefreshTokenRequest request) {
