@@ -23,7 +23,7 @@ public class User implements Serializable, UserDetails {
     @Column(length = 50, nullable = false)
     private String email;
 
-    @Column(length = 60, nullable = false)
+    @Column(length = 70, nullable = false)
     private String password;
 
     @Column(length = 30, nullable = false)
@@ -82,7 +82,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
