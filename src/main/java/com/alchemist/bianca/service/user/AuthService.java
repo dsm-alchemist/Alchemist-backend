@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -84,18 +85,21 @@ public class AuthService {
         }
     }
 
-    public void overlapEmail(EmailRequest request) {
+    public String overlapEmail(EmailRequest request) {
         if (userRepository.findById(request.getEmail()).isPresent()) {
             throw new AlreadyExistEmailException();
         }
+        return request.getEmail();
     }
 
-    public void overlapName(NameRequest request) {
+    public String overlapName(NameRequest request) {
         if (userRepository.findByName(request.getName()).isPresent()) {
             throw new AlreadyExistNameException();
         }
+        return request.getName();
     }
 
+    @Async(value = "mailSenderExecutor")
     public void sendCode(EmailRequest request) {
         String address = request.getEmail();
         String code = sendMail(address);
@@ -104,12 +108,14 @@ public class AuthService {
                 .ifPresent(certification -> codeRepository.save(certification.update(code, mailExp)));
     }
 
-    public void checkCode(VerifyCodeRequest request) {
+    public String checkCode(VerifyCodeRequest request) {
         VerifyCode code = codeRepository.findById(userFacade.getEmail())
                 .orElseThrow(InvalidCodeException::new);
         if (!code.getCode().equals(request.getCode())) {
             throw new UnlikeCodeException();
         }
+
+        return request.getCode();
     }
 
     public TokenResponse tokenRefresh(RefreshTokenRequest request) {
