@@ -26,10 +26,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     public ResponseEntity<FollowCountResponse> getFollowCount() {
-        int following = followRepository.findAllByFollower(userFacade.getEmail())
-                .size();
-        int follower = followRepository.findAllByFollowing(userFacade.getEmail())
-                .size();
+        int following = followRepository.getFollowingList(userFacade.getEmail()).size();
+        int follower = followRepository.getFollowerList(userFacade.getEmail()).size();
         return new ResponseEntity<>(new FollowCountResponse(
                 following,
                 follower
@@ -37,10 +35,10 @@ public class UserService {
     }
 
     public ResponseEntity<List<UserListResponse>> getFollowingList() {
-        List<UserListResponse> followings = followRepository.findAllByFollower(userFacade.getEmail())
+        List<UserListResponse> followings = followRepository.getFollowingList(userFacade.getEmail())
                 .stream().map(following -> UserListResponse.builder()
-                        .userName(following.getName())
-                        .userEmail(following.getEmail())
+                        .userName(following.getFollowing().getName())
+                        .userEmail(following.getFollowing().getEmail())
                         .build())
                 .collect(Collectors.toList());
 
@@ -48,10 +46,10 @@ public class UserService {
     }
 
     public ResponseEntity<List<UserListResponse>> getFollowersList() {
-        List<UserListResponse> followers = followRepository.findAllByFollowing(userFacade.getEmail())
+        List<UserListResponse> followers = followRepository.getFollowerList(userFacade.getEmail())
                 .stream().map(follower -> UserListResponse.builder()
-                        .userName(follower.getName())
-                        .userEmail(follower.getEmail())
+                        .userName(follower.getFollower().getName())
+                        .userEmail(follower.getFollower().getEmail())
                         .build())
                 .collect(Collectors.toList());
 
@@ -70,8 +68,8 @@ public class UserService {
     }
 
     @Transactional
-    public void addFollowing(EmailRequest request) {
-        User following = userRepository.findById(request.getEmail())
+    public void addFollowing(String email) {
+        User following = userRepository.findById(email)
                 .orElseThrow(UserNotFoundException::new);
         User follower = userRepository.findById(userFacade.getEmail())
                 .orElseThrow(UserNotFoundException::new);
@@ -85,18 +83,13 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteFollowing(EmailRequest request) {
-        User following = userRepository.findById(request.getEmail())
+    public void deleteFollowing(String email) {
+        User following = userRepository.findById(email)
                 .orElseThrow(UserNotFoundException::new);
         User follower = userRepository.findById(userFacade.getEmail())
                 .orElseThrow(UserNotFoundException::new);
 
-        followRepository.delete(
-                Follow.builder()
-                        .following(following)
-                        .follower(follower)
-                        .build()
-        );
+        followRepository.deleteFollow(follower, following);
     }
 
     public ResponseEntity<UserListResponse> myPage() {
