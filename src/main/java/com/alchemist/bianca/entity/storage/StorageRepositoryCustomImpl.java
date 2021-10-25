@@ -1,5 +1,6 @@
 package com.alchemist.bianca.entity.storage;
 
+import com.alchemist.bianca.dto.storage.request.StorageRequest;
 import com.alchemist.bianca.dto.storage.response.QStorageList;
 import com.alchemist.bianca.dto.storage.response.StorageList;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -29,10 +30,10 @@ public class StorageRepositoryCustomImpl implements StorageRepositoryCustom {
     }
 
     @Override
-    public void modifyStorage(Long storage_id, String task) {
+    public void modifyStorage(Long storage_id, StorageRequest task) {
         queryFactory
                 .update(storage)
-                .set(storage.task, task)
+                .set(storage.task, task.getTask())
                 .where(storage.storage_id.eq(storage_id))
                 .execute();
     }
