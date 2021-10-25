@@ -7,6 +7,7 @@ import com.alchemist.bianca.dto.user.response.UserListResponse;
 import com.alchemist.bianca.service.task.TaskService;
 import com.alchemist.bianca.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,18 +45,18 @@ public class UserController {
 
     @PostMapping("/following/{userEmail}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addFollowing(@PathVariable("userEmail") @Valid EmailRequest request) {
-        userService.addFollowing(request);
+    public void addFollowing(@PathVariable("userEmail") String email) {
+        userService.addFollowing(email);
     }
 
     @DeleteMapping("/following/{userEmail}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteFollowing(@PathVariable("userEmail") @Valid EmailRequest request) {
-        userService.deleteFollowing(request);
+    public void deleteFollowing(@PathVariable("userEmail") String email) {
+        userService.deleteFollowing(email);
     }
 
     @GetMapping("/task/{userEmail}")
-    public ResponseEntity<TaskListResponse> getOtherTaskList(@PathVariable String userEmail, @RequestParam("date") LocalDate date) {
+    public ResponseEntity<TaskListResponse> getOtherTaskList(@PathVariable String userEmail, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return taskService.getOtherTaskList(userEmail, date);
     }
 
