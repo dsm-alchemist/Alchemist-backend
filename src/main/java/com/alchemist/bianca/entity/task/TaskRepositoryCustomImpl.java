@@ -1,5 +1,6 @@
 package com.alchemist.bianca.entity.task;
 
+import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.QTaskList;
 import com.alchemist.bianca.dto.task.response.TaskList;
 import com.alchemist.bianca.facade.UserFacade;
@@ -38,10 +39,10 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
     }
 
     @Override
-    public void modifyTask(Long task_id, String task) {
+    public void modifyTask(Long task_id, TaskRequest task) {
         queryFactory
                 .update(task1)
-                .set(task1.task, task)
+                .set(task1.task, task.getTask())
                 .where(task1.task_id.eq(task_id))
                 .execute();
     }
