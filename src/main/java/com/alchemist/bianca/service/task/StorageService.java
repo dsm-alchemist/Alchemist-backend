@@ -1,6 +1,6 @@
 package com.alchemist.bianca.service.task;
 
-import com.alchemist.bianca.dto.storage.request.AddStorageRequest;
+import com.alchemist.bianca.dto.storage.request.StorageRequest;
 import com.alchemist.bianca.dto.storage.response.StorageList;
 import com.alchemist.bianca.entity.storage.Storage;
 import com.alchemist.bianca.entity.storage.StorageRepository;
@@ -30,8 +30,8 @@ public class StorageService {
     private final UserFacade userFacade;
 
     @Transactional
-    public void addStorage(AddStorageRequest request) {
-        User user = userRepository.findByName(userFacade.getEmail())
+    public void addStorage(StorageRequest request) {
+        User user = userRepository.findById(userFacade.getEmail())
                 .orElseThrow(UserNotFoundException::new);
 
         storageRepository.save(Storage.builder()
@@ -47,10 +47,12 @@ public class StorageService {
                 HttpStatus.OK);
     }
 
-    public void modifyStorage(Long storage_id, String task) {
+    @Transactional
+    public void modifyStorage(Long storage_id, StorageRequest task) {
         storageRepository.modifyStorage(storage_id, task);
     }
 
+    @Transactional
     public void deleteStorage(Long storage_id) {
         storageRepository.deleteStorage(storage_id);
     }
