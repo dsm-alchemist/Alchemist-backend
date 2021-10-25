@@ -1,6 +1,7 @@
 package com.alchemist.bianca.service.task;
 
 import com.alchemist.bianca.dto.task.request.AddTaskRequest;
+import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.TaskListResponse;
 import com.alchemist.bianca.dto.task.response.TaskList;
 import com.alchemist.bianca.entity.storage.Storage;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class TaskService {
     private final UserFacade userFacade;
 
     public void addTask(AddTaskRequest request) {
-        User user = userRepository.findByName(userFacade.getEmail())
+        User user = userRepository.findById(userFacade.getEmail())
                 .orElseThrow(UserNotFoundException::new);
 
         taskRepository.save(
@@ -44,7 +46,7 @@ public class TaskService {
     }
 
     @Transactional
-    public ResponseEntity<TaskListResponse> getOtherTaskList(String userEmail, LocalDate date) { //파라미터 변경
+    public ResponseEntity<TaskListResponse> getOtherTaskList(String userEmail, LocalDate date) {
         String name = getName(userEmail);
 
         List<TaskList> taskList = taskRepository.getTaskList(userEmail, date);
@@ -60,7 +62,7 @@ public class TaskService {
     public ResponseEntity<TaskListResponse> getMyTaskList(LocalDate date) {
         String name = getName(userFacade.getEmail());
 
-        List<TaskList> taskList = taskRepository.getTaskList(name, date);
+        List<TaskList> taskList = taskRepository.getTaskList(userFacade.getEmail(), date);
 
         return new ResponseEntity<>(
                 TaskListResponse.builder()
@@ -69,14 +71,17 @@ public class TaskService {
                         .build(), HttpStatus.OK);
     }
 
-    public void modifyTask(Long task_id, String task) {
+    @Transactional
+    public void modifyTask(Long task_id, TaskRequest task) {
         taskRepository.modifyTask(task_id, task);
     }
 
+    @Transactional
     public void modifyDate(Long task_id, LocalDate date) {
         taskRepository.modifyDate(task_id, date);
     }
 
+    @Transactional
     public void deleteTask(Long task_id) {
         taskRepository.deleteTask(task_id);
     }
