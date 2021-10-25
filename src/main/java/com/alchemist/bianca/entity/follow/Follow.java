@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Follow {
 
     @EmbeddedId
-    private FollowId followId;
+    private FollowId followId = new FollowId();
 
     @MapsId("following")
     @ManyToOne(optional = false)
