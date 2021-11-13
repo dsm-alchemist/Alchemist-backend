@@ -1,6 +1,7 @@
 package com.alchemist.bianca.service.user;
 
 import com.alchemist.bianca.dto.user.request.EmailRequest;
+import com.alchemist.bianca.dto.user.request.TimerRequest;
 import com.alchemist.bianca.dto.user.response.FollowCountResponse;
 import com.alchemist.bianca.dto.user.response.UserListResponse;
 import com.alchemist.bianca.entity.follow.Follow;
@@ -101,5 +102,15 @@ public class UserService {
                 .orElseThrow(UserNotFoundException::new);
 
         return new ResponseEntity<>(information, HttpStatus.OK);
+    }
+
+    @Transactional
+    public void startTimer(TimerRequest time) {
+        userRepository.startTimer(time.getTime());
+    }
+
+    @Transactional
+    public void stopTimer() {
+        userRepository.stopTimer();
     }
 }
