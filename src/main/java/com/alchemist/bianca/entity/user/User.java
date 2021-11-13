@@ -4,6 +4,8 @@ import com.alchemist.bianca.entity.follow.Follow;
 import com.alchemist.bianca.entity.storage.Storage;
 import com.alchemist.bianca.entity.task.Task;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +19,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
+@DynamicInsert
 public class User implements Serializable, UserDetails {
     @Id
     @Column(length = 50, nullable = false)
@@ -28,10 +31,12 @@ public class User implements Serializable, UserDetails {
     @Column(length = 30, nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private Long timer;
 
-    @Column(columnDefinition = "boolean default true")
-    private boolean is_stop;
+    @Column(nullable = false)
+    @ColumnDefault("1")
+    private Boolean is_stop;
 
     @OneToMany(mappedBy = "following", cascade = { CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Follow> following = new ArrayList<>();
@@ -46,10 +51,11 @@ public class User implements Serializable, UserDetails {
     private List<Storage> storages = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String name) {
+    public User(String email, String password, String name, Long timer) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.timer = timer;
     }
 
     @Override
