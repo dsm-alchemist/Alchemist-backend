@@ -80,6 +80,7 @@ public class AuthService {
                             .email(request.getEmail())
                             .password(getEncrypt(request.getPassword()))
                             .name(request.getName())
+                            .timer(request.getTimer())
                             .build()
             );
         }
