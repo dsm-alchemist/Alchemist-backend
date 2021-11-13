@@ -1,8 +1,8 @@
 package com.alchemist.bianca.service.user;
 
-import com.alchemist.bianca.dto.user.request.EmailRequest;
 import com.alchemist.bianca.dto.user.request.TimerRequest;
 import com.alchemist.bianca.dto.user.response.FollowCountResponse;
+import com.alchemist.bianca.dto.user.response.LankResponse;
 import com.alchemist.bianca.dto.user.response.UserListResponse;
 import com.alchemist.bianca.entity.follow.Follow;
 import com.alchemist.bianca.entity.follow.FollowRepository;
@@ -11,6 +11,8 @@ import com.alchemist.bianca.entity.user.UserRepository;
 import com.alchemist.bianca.exception.UserNotFoundException;
 import com.alchemist.bianca.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -112,5 +114,9 @@ public class UserService {
     @Transactional
     public void stopTimer() {
         userRepository.stopTimer();
+    }
+
+    public Page<LankResponse> rank(Pageable pageable) {
+        return userRepository.rank(pageable);
     }
 }
