@@ -62,7 +62,7 @@ public class TaskService {
     public ResponseEntity<TaskListResponse> getMyTaskList(LocalDate date) {
         String name = getName(userFacade.getEmail());
 
-        List<TaskList> taskList = taskRepository.getTaskList(userFacade.getEmail(), date);
+        List<TaskList> taskList = taskRepository.getTaskList(null, date);
 
         return new ResponseEntity<>(
                 TaskListResponse.builder()
