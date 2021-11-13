@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +28,10 @@ public class User implements Serializable, UserDetails {
     @Column(length = 30, nullable = false)
     private String name;
 
-    private LocalTime timer;
+    private Long timer;
+
+    @Column(columnDefinition = "boolean default true")
+    private boolean is_stop;
 
     @OneToMany(mappedBy = "following", cascade = { CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Follow> following = new ArrayList<>();
