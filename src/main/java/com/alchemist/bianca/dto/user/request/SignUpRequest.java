@@ -19,4 +19,6 @@ public class SignUpRequest {
 
     @NotNull(message = "name은 null일 수 없습니다.")
     private String name;
+
+    private final Long timer = 0L;
 }
