@@ -1,6 +1,5 @@
 package com.alchemist.bianca.entity.follow;
 
-import com.alchemist.bianca.dto.user.response.UserListResponse;
 import com.alchemist.bianca.entity.user.User;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
