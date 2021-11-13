@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class LankResponse {
-    private final String name;
-    private final Long timer;
-    private final Boolean is_stop;
+    private String name;
+    private Long timer;
+    private Boolean is_stop;
 
     @QueryProjection
     public LankResponse(String name, Long timer, Boolean is_stop) {
