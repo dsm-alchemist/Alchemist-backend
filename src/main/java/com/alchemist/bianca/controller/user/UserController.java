@@ -1,13 +1,15 @@
 package com.alchemist.bianca.controller.user;
 
 import com.alchemist.bianca.dto.task.response.TaskListResponse;
-import com.alchemist.bianca.dto.user.request.EmailRequest;
 import com.alchemist.bianca.dto.user.request.TimerRequest;
 import com.alchemist.bianca.dto.user.response.FollowCountResponse;
+import com.alchemist.bianca.dto.user.response.LankResponse;
 import com.alchemist.bianca.dto.user.response.UserListResponse;
 import com.alchemist.bianca.service.task.TaskService;
 import com.alchemist.bianca.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,5 +76,10 @@ public class UserController {
     @PutMapping("/timer")
     public void stopTimer() {
         userService.stopTimer();
+    }
+
+    @GetMapping("/rank")
+    public Page<LankResponse> rank(Pageable pageable) {
+        return userService.rank(pageable);
     }
 }
