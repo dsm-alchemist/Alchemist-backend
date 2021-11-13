@@ -2,6 +2,7 @@ package com.alchemist.bianca.controller.user;
 
 import com.alchemist.bianca.dto.task.response.TaskListResponse;
 import com.alchemist.bianca.dto.user.request.EmailRequest;
+import com.alchemist.bianca.dto.user.request.TimerRequest;
 import com.alchemist.bianca.dto.user.response.FollowCountResponse;
 import com.alchemist.bianca.dto.user.response.UserListResponse;
 import com.alchemist.bianca.service.task.TaskService;
@@ -63,5 +64,15 @@ public class UserController {
     @GetMapping("/account")
     public ResponseEntity<UserListResponse> myPage() {
         return userService.myPage();
+    }
+
+    @PostMapping("/timer")
+    public void startTimer(@RequestBody @Valid TimerRequest time) {
+        userService.startTimer(time);
+    }
+
+    @PutMapping("/timer")
+    public void stopTimer() {
+        userService.stopTimer();
     }
 }
