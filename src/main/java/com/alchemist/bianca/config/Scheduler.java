@@ -1,20 +1,20 @@
 package com.alchemist.bianca.config;
 
+import com.alchemist.bianca.entity.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
-@EnableBatchProcessing
+@EnableScheduling
 @RequiredArgsConstructor
-public class BatchConfiguration {
+public class Scheduler {
 
-    private final JobBuilderFactory jobBuilderFactory;
-    private final StepBuilderFactory stepBuilderFactory;
+    private final UserRepository userRepository;
 
-    @Bean
-    public F
+    @Scheduled(cron = "0 0 0 * * *")
+    public void setIsStop() {
+        userRepository.bulkUpdate();
+    }
 }
