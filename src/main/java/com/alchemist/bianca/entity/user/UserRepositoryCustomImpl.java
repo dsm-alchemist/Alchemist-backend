@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static com.alchemist.bianca.entity.follow.QFollow.follow;
@@ -20,6 +22,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
     private final UserFacade userFacade;
+    private final EntityManager entityManager;
 
     @Override
     public void startTimer(Long time) {
@@ -41,7 +44,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public Page<LankResponse> lank(Pageable pageable) {
+    public Page<LankResponse> rank(Pageable pageable) {
         User us = queryFactory
                 .selectFrom(user)
                 .where(user.email.eq(userFacade.getEmail()))
@@ -54,15 +57,28 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                         user.is_stop
                 ))
                 .from(user)
-                .join(user.follower, follow)
+                .join(user.following, follow)
                 .where(follow.follower.eq(us))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .orderBy(user.timer.desc())
                 .fetchResults();
 
         List<LankResponse> content = results.getResults();
         long total = results.getTotal();
 
         return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    @Transactional
+    public void bulkUpdate() {
+        queryFactory
+                .update(user)
+                .set(user.is_stop, true)
+                .set(user.timer, 0L)
+                .execute();
+        entityManager.flush();
+        entityManager.clear();
     }
 }
