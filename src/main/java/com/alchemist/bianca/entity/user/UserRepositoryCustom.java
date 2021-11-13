@@ -7,5 +7,6 @@ import org.springframework.data.domain.Pageable;
 public interface UserRepositoryCustom {
     void startTimer(Long time);
     void stopTimer();
-    Page<LankResponse> lank(Pageable pageable);
+    Page<LankResponse> rank(Pageable pageable);
+    void bulkUpdate();
 }
