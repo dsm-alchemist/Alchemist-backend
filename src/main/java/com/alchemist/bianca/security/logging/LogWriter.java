@@ -18,13 +18,13 @@ import java.util.zip.ZipOutputStream;
 
 @Component
 public class LogWriter {
-    @Value("${tn1.name}")
+    @Value("${alchemist.name}")
     private String logFileName;
 
-    @Value("${tn1.file.path}")
+    @Value("${alchemist.file.path}")
     private String logPath;
 
-    @Value("${tn1.size}")
+    @Value("${alchemist.size}")
     private int logSize;
 
     private File file;
