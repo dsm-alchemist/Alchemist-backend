@@ -7,7 +7,6 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew bootJar
 
-FROM openjdk:16
 COPY --from=builder build/libs/*.jar app.jar
 
 EXPOSE 8080
