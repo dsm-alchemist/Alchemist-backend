@@ -2,7 +2,7 @@ spring:
   profiles:
     active: local
   datasource:
-    url: jdbc:mysql://alchemist.coyyrtneae5j.ap-northeast-2.rds.amazonaws.com:3306/alchemist?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://alchemist.coyyrtneae5j.ap-northeast-2.rds.amazonaws.com:3306/Alchemist?serverTimezone=Asia/Seoul
     username: ${DB_USER}
     password: ${DB_PASS}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,9 +11,10 @@ spring:
     port: ${REDIS_PORT}
     password: ${REDIS_PASS}
   jpa:
+    database: mysql
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
