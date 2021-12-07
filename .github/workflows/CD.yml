@@ -41,6 +41,5 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           aws s3 cp \
-          --region ap-northeast-2 \
-          --acl private \
-      ./alchemist-build.zip s3://alchemistbucket/
+          ./alchemist-build.zip s3://alchemistbucket/ \
+          --acl private 
