@@ -41,4 +41,3 @@ jobs:
           aws s3 cp \
           --region ap-northeast-2 \
           --acl private \
-      ./alchemist-build.zip s3://alchemist-build/
