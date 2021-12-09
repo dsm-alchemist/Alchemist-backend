@@ -43,3 +43,4 @@ jobs:
             docker tag ${{ secrets.DOCKER_USER }}/${{ secrets.IMAGE }}:${GITHUB_SHA::7} ${{ secrets.IMAGE }}
             docker stop server
             docker run --env-file ./env.sh -d --rm --name server -p 8080:8080 ${{ secrets.IMAGE }}
+ 
