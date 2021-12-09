@@ -28,7 +28,8 @@ jobs:
         run: |
           docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
           docker build -t ${{ secrets.IMAGE }} .
-          docker push ${{ secrets.DOCKER_USER }}/${{ secrets.IMAGE }}:${GITHUB_SHA}
+          docker tag ${{ secrets.IMAGE }} ${{ secrets.DOCKER_USER }}/${{ secrets.IMAGE }}:${GITHUB_SHA::7}
+          docker push ${{ secrets.DOCKER_USER }}/${{ secrets.IMAGE }}:${GITHUB_SHA::7}
 
       - name: Deploy to AWS EC2
         uses: appleboy/ssh-action@master
