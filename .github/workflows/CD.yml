@@ -38,7 +38,6 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           envs: GITHUB_SHA
           script: |
-            touch test.c
             docker pull ${{ secrets.DOCKER_USER }}/${{ secrets.IMAGE }}
             docker stop server
             docker run --env-file ./env.sh -d --rm --name server -p 8080:8080 ${{ secrets.DOCKER_USER }}/${{ secrets.IMAGE }}
