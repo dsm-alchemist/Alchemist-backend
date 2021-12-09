@@ -62,3 +62,6 @@ compileQuerydsl.doFirst {
 	if(file(querydslDir).exists())
 		delete(file(querydslDir))
 }
+tasks.jar {
+	enabled = false
+}
