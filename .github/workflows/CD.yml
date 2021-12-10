@@ -36,7 +36,7 @@ jobs:
         with:
           host: ${{ secrets.HOST_NAME }}
           username: ${{ secrets.USER_NAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          password: ${{ secrets.EC2_PASS }}
           envs: GITHUB_SHA
           script: |
             docker pull ${{ secrets.DOCKER_USER }}/${{ secrets.IMAGE }}:${GITHUB_SHA::7}
