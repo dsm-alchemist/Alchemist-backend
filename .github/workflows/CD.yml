@@ -41,4 +41,4 @@ jobs:
           script: |
             docker pull ${{ secrets.DOCKER_USER }}/${{ secrets.IMAGE }}:${GITHUB_SHA::7}
             docker stop server
-            docker run --env-file ./env.sh -d --rm --name server -p 80:8080 ${{ secrets.DOCKER_USER }}/${{ secrets.IMAGE }}:${GITHUB_SHA::7}
+            docker run --env-file ./env.sh -d --rm --name server -p 8080:8080 ${{ secrets.DOCKER_USER }}/${{ secrets.IMAGE }}:${GITHUB_SHA::7}
