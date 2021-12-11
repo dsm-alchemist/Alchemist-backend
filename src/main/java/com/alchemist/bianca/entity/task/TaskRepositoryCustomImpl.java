@@ -64,6 +64,15 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
                 .execute();
     }
 
+    @Override
+    public void modifyIsDone(Long task_id, Boolean is_done) {
+        queryFactory
+                .update(task1)
+                .set(task1.isDone, is_done)
+                .where(task1.task_id.eq(task_id))
+                .execute();
+    }
+
     private BooleanExpression emailEq(String email) {
         return hasText(email) ? user.email.eq(email) : user.email.eq(userFacade.getEmail());
     }

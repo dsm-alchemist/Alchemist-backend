@@ -11,4 +11,5 @@ public interface TaskRepositoryCustom {
     void modifyTask(Long task_id, TaskRequest task);
     void modifyDate(Long task_id, String date);
     void deleteTask(Long task_id);
+    void modifyIsDone(Long task_id, Boolean is_done);
 }

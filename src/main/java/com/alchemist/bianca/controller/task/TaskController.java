@@ -50,4 +50,10 @@ public class TaskController {
     public void moveTaskToStorage(@PathVariable("taskId") Long task_id) {
         taskService.moveTaskToStorage(task_id);
     }
+
+    @PutMapping("/done/{taskId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void isDone(@PathVariable("taskId") Long task_id, @RequestBody Boolean isDone) {
+        taskService.isDone(task_id, isDone);
+    }
 }

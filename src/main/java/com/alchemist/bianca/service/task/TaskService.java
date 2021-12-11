@@ -99,6 +99,11 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
+    @Transactional
+    public void isDone(Long task_id, Boolean is_done) {
+        taskRepository.modifyIsDone(task_id, is_done);
+    }
+
     private String getName(String email) {
         return userRepository.findById(email)
                 .orElseThrow(UserNotFoundException::new)
