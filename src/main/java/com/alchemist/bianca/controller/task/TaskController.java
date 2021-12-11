@@ -1,6 +1,7 @@
 package com.alchemist.bianca.controller.task;
 
 import com.alchemist.bianca.dto.task.request.AddTaskRequest;
+import com.alchemist.bianca.dto.task.request.IsDoneRequest;
 import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.TaskListResponse;
 import com.alchemist.bianca.service.task.TaskService;
@@ -53,7 +54,7 @@ public class TaskController {
 
     @PutMapping("/done/{taskId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void isDone(@PathVariable("taskId") Long task_id, @RequestBody Boolean isDone) {
+    public void isDone(@PathVariable("taskId") Long task_id, @RequestBody IsDoneRequest isDone) {
         taskService.isDone(task_id, isDone);
     }
 }

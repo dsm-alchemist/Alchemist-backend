@@ -1,5 +1,6 @@
 package com.alchemist.bianca.entity.task;
 
+import com.alchemist.bianca.dto.task.request.IsDoneRequest;
 import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.QTaskList;
 import com.alchemist.bianca.dto.task.response.TaskList;
@@ -65,10 +66,10 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
     }
 
     @Override
-    public void modifyIsDone(Long task_id, Boolean is_done) {
+    public void modifyIsDone(Long task_id, IsDoneRequest request) {
         queryFactory
                 .update(task1)
-                .set(task1.isDone, is_done)
+                .set(task1.isDone, request.getIsDone())
                 .where(task1.task_id.eq(task_id))
                 .execute();
     }

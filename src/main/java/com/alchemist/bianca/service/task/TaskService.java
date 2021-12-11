@@ -1,6 +1,7 @@
 package com.alchemist.bianca.service.task;
 
 import com.alchemist.bianca.dto.task.request.AddTaskRequest;
+import com.alchemist.bianca.dto.task.request.IsDoneRequest;
 import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.TaskListResponse;
 import com.alchemist.bianca.dto.task.response.TaskList;
@@ -100,7 +101,7 @@ public class TaskService {
     }
 
     @Transactional
-    public void isDone(Long task_id, Boolean is_done) {
+    public void isDone(Long task_id, IsDoneRequest is_done) {
         taskRepository.modifyIsDone(task_id, is_done);
     }
 

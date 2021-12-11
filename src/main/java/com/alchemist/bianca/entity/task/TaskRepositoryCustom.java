@@ -1,5 +1,6 @@
 package com.alchemist.bianca.entity.task;
 
+import com.alchemist.bianca.dto.task.request.IsDoneRequest;
 import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.TaskList;
 
@@ -11,5 +12,5 @@ public interface TaskRepositoryCustom {
     void modifyTask(Long task_id, TaskRequest task);
     void modifyDate(Long task_id, String date);
     void deleteTask(Long task_id);
-    void modifyIsDone(Long task_id, Boolean is_done);
+    void modifyIsDone(Long task_id, IsDoneRequest is_done);
 }
