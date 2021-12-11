@@ -22,12 +22,12 @@ public class AuthController {
         authService.signUp(request);
     }
 
-    @GetMapping("/reduplication/{email}")
+    @GetMapping("/reduplication/email/{email}")
     public String overlapEmail(@PathVariable("email") String email) {
         return authService.overlapEmail(email);
     }
 
-    @GetMapping("/reduplication/{name}")
+    @GetMapping("/reduplication/name/{name}")
     public String overlapName(@PathVariable("name") String name) {
         return authService.overlapName(name);
     }
