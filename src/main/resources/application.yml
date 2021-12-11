@@ -46,3 +46,9 @@ jwt:
 code:
   min: ${MIN_VALUE}
   max: ${MAX_VALUE}
+
+alchemist:
+  name: ${LOG_NAME}
+  file:
+    path: ${LOG_PATH}
+  size: ${LOG_SIZE}
