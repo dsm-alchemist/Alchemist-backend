@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/task/{userEmail}")
-    public ResponseEntity<TaskListResponse> getOtherTaskList(@PathVariable String userEmail, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public ResponseEntity<TaskListResponse> getOtherTaskList(@PathVariable String userEmail, @RequestParam("date") String date) {
         return taskService.getOtherTaskList(userEmail, date);
     }
 

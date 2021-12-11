@@ -5,12 +5,9 @@ import com.alchemist.bianca.dto.task.request.TaskRequest;
 import com.alchemist.bianca.dto.task.response.TaskListResponse;
 import com.alchemist.bianca.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +17,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
-    public ResponseEntity<TaskListResponse> getTaskList(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public ResponseEntity<TaskListResponse> getTaskList(@RequestParam("date") String date) {
         return taskService.getMyTaskList(date);
     }
 
@@ -32,7 +29,7 @@ public class TaskController {
 
     @PostMapping("/{taskId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void modifyDate(@PathVariable("taskId") Long task_id, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public void modifyDate(@PathVariable("taskId") Long task_id, @RequestParam("date") String date) {
         taskService.modifyDate(task_id, date);
     }
 

@@ -2,6 +2,7 @@ package com.alchemist.bianca.config;
 
 import com.alchemist.bianca.error.ExceptionHandlerFilter;
 import com.alchemist.bianca.security.jwt.JwtTokenProvider;
+import com.alchemist.bianca.security.logging.RequestLogger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
+    private final RequestLogger requestLogger;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -40,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.PUT, "/refresh").permitAll()
                 .anyRequest().authenticated()
-                .and().apply(new FilterConfig(jwtTokenProvider, exceptionHandlerFilter));
+                .and().apply(new FilterConfig(jwtTokenProvider, exceptionHandlerFilter, requestLogger));
 
         http
                 .logout().logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)));

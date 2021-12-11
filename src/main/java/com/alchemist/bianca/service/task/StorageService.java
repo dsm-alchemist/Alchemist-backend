@@ -58,7 +58,7 @@ public class StorageService {
     }
 
     @Transactional
-    public void moveStorageToTask(Long storage_id, LocalDate date) {
+    public void moveStorageToTask(Long storage_id, String date) {
         Storage storage = storageRepository.findById(storage_id)
                 .orElseThrow(StorageNotFoundException::new);
 

@@ -22,7 +22,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
     private final UserFacade userFacade;
 
     @Override
-    public List<TaskList> getTaskList(String userEmail, LocalDate date) {
+    public List<TaskList> getTaskList(String userEmail, String date) {
         return queryFactory
                 .select(new QTaskList(
                         task1.task_id,
@@ -48,7 +48,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
     }
 
     @Override
-    public void modifyDate(Long task_id, LocalDate date) {
+    public void modifyDate(Long task_id, String date) {
         queryFactory
                 .update(task1)
                 .set(task1.date, date)

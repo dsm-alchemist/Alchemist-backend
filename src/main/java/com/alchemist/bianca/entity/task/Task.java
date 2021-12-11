@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -21,7 +20,7 @@ public class Task {
     private String task;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private String date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "email", nullable = false)
@@ -31,7 +30,7 @@ public class Task {
     private boolean isDone;
 
     @Builder
-    public Task(String task, LocalDate date, User email) {
+    public Task(String task, String date, User email) {
         this.task = task;
         this.date = date;
         this.email = email;

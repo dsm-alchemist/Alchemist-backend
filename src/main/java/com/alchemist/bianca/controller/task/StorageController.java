@@ -4,13 +4,11 @@ import com.alchemist.bianca.dto.storage.request.StorageRequest;
 import com.alchemist.bianca.dto.storage.response.StorageList;
 import com.alchemist.bianca.service.task.StorageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,7 +31,7 @@ public class StorageController {
 
     @PostMapping("/task/storage/{storageId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void moveTaskToStorage(@PathVariable("storageId") Long storage_id, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public void moveTaskToStorage(@PathVariable("storageId") Long storage_id, @RequestParam("date") String date) {
         storageService.moveStorageToTask(storage_id, date);
     }
 

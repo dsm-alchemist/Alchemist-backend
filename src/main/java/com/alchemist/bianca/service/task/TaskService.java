@@ -19,9 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +44,7 @@ public class TaskService {
     }
 
     @Transactional
-    public ResponseEntity<TaskListResponse> getOtherTaskList(String userEmail, LocalDate date) {
+    public ResponseEntity<TaskListResponse> getOtherTaskList(String userEmail, String date) {
         String name = getName(userEmail);
 
         List<TaskList> taskList = taskRepository.getTaskList(userEmail, date);
@@ -59,7 +57,7 @@ public class TaskService {
     }
 
     @Transactional
-    public ResponseEntity<TaskListResponse> getMyTaskList(LocalDate date) {
+    public ResponseEntity<TaskListResponse> getMyTaskList(String date) {
         String name = getName(userFacade.getEmail());
 
         List<TaskList> taskList = taskRepository.getTaskList(null, date);
@@ -77,7 +75,7 @@ public class TaskService {
     }
 
     @Transactional
-    public void modifyDate(Long task_id, LocalDate date) {
+    public void modifyDate(Long task_id, String date) {
         taskRepository.modifyDate(task_id, date);
     }
 
