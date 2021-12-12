@@ -6,6 +6,7 @@ import com.alchemist.bianca.dto.user.response.LankResponse;
 import com.alchemist.bianca.dto.user.response.UserListResponse;
 import com.alchemist.bianca.entity.follow.Follow;
 import com.alchemist.bianca.entity.follow.FollowRepository;
+import com.alchemist.bianca.entity.task.TaskRepository;
 import com.alchemist.bianca.entity.user.User;
 import com.alchemist.bianca.entity.user.UserRepository;
 import com.alchemist.bianca.exception.UserNotFoundException;
@@ -18,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,13 +30,19 @@ public class UserService {
     private final UserFacade userFacade;
     private final FollowRepository followRepository;
     private final UserRepository userRepository;
+    private final TaskRepository taskRepository;
 
     public ResponseEntity<FollowCountResponse> getFollowCount() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        Date time = new Date();
+        String date = format.format(time);
         int following = followRepository.getFollowingList(userFacade.getEmail()).size();
         int follower = followRepository.getFollowerList(userFacade.getEmail()).size();
+        int taskCount = taskRepository.findAllByDate(date).size();
         return new ResponseEntity<>(new FollowCountResponse(
                 following,
-                follower
+                follower,
+                taskCount
         ), HttpStatus.OK);
     }
 

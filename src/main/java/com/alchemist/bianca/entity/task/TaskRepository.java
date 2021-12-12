@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long>, TaskRepositoryCustom {
-    List<Task> findAllByDate(LocalDate date);
+    List<Task> findAllByDate(String date);
 }

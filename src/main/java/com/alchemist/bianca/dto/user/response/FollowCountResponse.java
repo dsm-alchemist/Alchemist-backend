@@ -8,4 +8,5 @@ import lombok.Getter;
 public class FollowCountResponse {
     private final int following;
     private final int follower;
+    private final int taskCount;
 }
