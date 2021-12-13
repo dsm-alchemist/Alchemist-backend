@@ -38,7 +38,7 @@ public class UserService {
         String date = format.format(time);
         int following = followRepository.getFollowingList(userFacade.getEmail()).size();
         int follower = followRepository.getFollowerList(userFacade.getEmail()).size();
-        int taskCount = taskRepository.findAllByDate(date).size();
+        int taskCount = taskRepository.getTaskList(userFacade.getEmail(), date, false).size();
         return new ResponseEntity<>(new FollowCountResponse(
                 following,
                 follower,

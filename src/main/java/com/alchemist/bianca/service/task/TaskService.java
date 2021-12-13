@@ -48,7 +48,7 @@ public class TaskService {
     public ResponseEntity<TaskListResponse> getOtherTaskList(String userEmail, String date) {
         String name = getName(userEmail);
 
-        List<TaskList> taskList = taskRepository.getTaskList(userEmail, date);
+        List<TaskList> taskList = taskRepository.getTaskList(userEmail, date, true);
 
         return new ResponseEntity<>(
                 TaskListResponse.builder()
@@ -61,7 +61,7 @@ public class TaskService {
     public ResponseEntity<TaskListResponse> getMyTaskList(String date) {
         String name = getName(userFacade.getEmail());
 
-        List<TaskList> taskList = taskRepository.getTaskList(null, date);
+        List<TaskList> taskList = taskRepository.getTaskList(null, date, true);
 
         return new ResponseEntity<>(
                 TaskListResponse.builder()

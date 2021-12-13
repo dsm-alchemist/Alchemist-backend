@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long>, TaskRepositoryCustom {
-    List<Task> findAllByDate(String date);
 }

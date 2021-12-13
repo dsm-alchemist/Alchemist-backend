@@ -23,7 +23,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
     private final UserFacade userFacade;
 
     @Override
-    public List<TaskList> getTaskList(String userEmail, String date) {
+    public List<TaskList> getTaskList(String userEmail, String date, Boolean isFull) {
         return queryFactory
                 .select(new QTaskList(
                         task1.task_id,
@@ -34,7 +34,8 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
                 .join(task1.email, user)
                 .where(
                         emailEq(userEmail),
-                        task1.date.eq(date)
+                        task1.date.eq(date),
+                        isDoneEq(isFull)
                 )
                 .fetch();
     }
@@ -76,5 +77,9 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
 
     private BooleanExpression emailEq(String email) {
         return hasText(email) ? user.email.eq(email) : user.email.eq(userFacade.getEmail());
+    }
+
+    private BooleanExpression isDoneEq(Boolean isFull) {
+        return isFull.equals(true) ? null : task1.isDone.eq(false);
     }
 }
