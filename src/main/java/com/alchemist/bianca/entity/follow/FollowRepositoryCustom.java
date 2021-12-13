@@ -9,4 +9,5 @@ public interface FollowRepositoryCustom {
     List<Follow> getFollowingList(String email);
     List<Follow> getFollowerList(String email);
     void deleteFollow(User follower, User following);
+    List<String> getFollowingListEmail(String email);
 }

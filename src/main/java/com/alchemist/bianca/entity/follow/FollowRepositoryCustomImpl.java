@@ -42,4 +42,14 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
                 )
                 .execute();
     }
+
+    @Override
+    public List<String> getFollowingListEmail(String email) {
+        return queryFactory
+                .select(follow.following.email)
+                .from(follow)
+                .join(follow.follower, user)
+                .where(user.email.eq(email))
+                .fetch();
+    }
 }

@@ -10,4 +10,5 @@ import lombok.Getter;
 public class UserListResponse {
     private final String userName;
     private final String userEmail;
+    private final Boolean isFollowing;
 }

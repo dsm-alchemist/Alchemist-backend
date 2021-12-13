@@ -51,6 +51,7 @@ public class UserService {
                 .stream().map(following -> UserListResponse.builder()
                         .userName(following.getFollowing().getName())
                         .userEmail(following.getFollowing().getEmail())
+                        .isFollowing(true)
                         .build())
                 .collect(Collectors.toList());
 
@@ -58,10 +59,12 @@ public class UserService {
     }
 
     public ResponseEntity<List<UserListResponse>> getFollowersList() {
+        List<String> following = followRepository.getFollowingListEmail(userFacade.getEmail());
         List<UserListResponse> followers = followRepository.getFollowerList(userFacade.getEmail())
                 .stream().map(follower -> UserListResponse.builder()
                         .userName(follower.getFollower().getName())
                         .userEmail(follower.getFollower().getEmail())
+                        .isFollowing(following.contains(follower.getFollower().getEmail()))
                         .build())
                 .collect(Collectors.toList());
 
@@ -69,10 +72,12 @@ public class UserService {
     }
 
     public ResponseEntity<List<UserListResponse>> getUsersList() {
+        List<String> following = followRepository.getFollowingListEmail(userFacade.getEmail());
         List<UserListResponse> users = userRepository.findAll()
                 .stream().map(user -> UserListResponse.builder()
                         .userName(user.getName())
                         .userEmail(user.getEmail())
+                        .isFollowing(following.contains(user.getEmail()))
                         .build())
                 .collect(Collectors.toList());
 
