@@ -33,6 +33,24 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
     }
 
     @Override
+    public Long followingCount(String email) {
+        return queryFactory
+                .selectFrom(follow)
+                .join(follow.follower, user)
+                .where(user.email.eq(email))
+                .fetchCount();
+    }
+
+    @Override
+    public Long followerCount(String email) {
+        return queryFactory
+                .selectFrom(follow)
+                .join(follow.following, user)
+                .where(user.email.eq(email))
+                .fetchCount();
+    }
+
+    @Override
     public void deleteFollow(User follower, User following) {
         queryFactory
                 .delete(follow)
@@ -44,7 +62,7 @@ public class FollowRepositoryCustomImpl implements FollowRepositoryCustom {
     }
 
     @Override
-    public List<String> getFollowingListEmail(String email) {
+    public List<String> getFollowingEmailList(String email) {
         return queryFactory
                 .select(follow.following.email)
                 .from(follow)

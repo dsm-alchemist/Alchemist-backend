@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class FollowCountResponse {
-    private final int following;
-    private final int follower;
-    private final int taskCount;
+    private final Long following;
+    private final Long follower;
+    private final Long taskCount;
 }

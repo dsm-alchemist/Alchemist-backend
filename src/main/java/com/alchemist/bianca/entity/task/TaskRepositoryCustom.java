@@ -8,7 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TaskRepositoryCustom {
-    List<TaskList> getTaskList(String userEmail, String date, Boolean isFull);
+    List<TaskList> getTaskList(String email, String date);
+    Long taskCount(String email, String date);
     void modifyTask(Long task_id, TaskRequest task);
     void modifyDate(Long task_id, String date);
     void deleteTask(Long task_id);
