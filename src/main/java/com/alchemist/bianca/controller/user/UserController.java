@@ -74,13 +74,17 @@ public class UserController {
     }
 
     @PutMapping("/timer")
-    public Long stopTimer(@RequestBody @Valid TimerRequest time) {
-        userService.stopTimer();
-        return time.getTime();
+    public void stopTimer(@RequestBody @Valid TimerRequest second) {
+        userService.stopTimer(second.getTime());
     }
 
     @GetMapping("/rank")
     public Page<LankResponse> rank(Pageable pageable) {
         return userService.rank(pageable);
+    }
+
+    @GetMapping("/time")
+    public Long getSecond() {
+        return userService.getSecond();
     }
 }

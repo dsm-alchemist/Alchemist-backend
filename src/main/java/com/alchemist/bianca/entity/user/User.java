@@ -20,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @DynamicInsert
+@Builder
 public class User implements Serializable, UserDetails {
     @Id
     @Column(length = 50, nullable = false)
@@ -33,6 +34,8 @@ public class User implements Serializable, UserDetails {
 
     @Column(nullable = false)
     private Long timer;
+
+    private Long second;
 
     @Column(nullable = false)
     @ColumnDefault("1")
@@ -49,14 +52,6 @@ public class User implements Serializable, UserDetails {
 
     @OneToMany(mappedBy = "email", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Storage> storages = new ArrayList<>();
-
-    @Builder
-    public User(String email, String password, String name, Long timer) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.timer = timer;
-    }
 
     @Override
     public int hashCode() {

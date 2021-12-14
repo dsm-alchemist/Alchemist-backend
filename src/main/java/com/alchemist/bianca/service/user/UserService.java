@@ -126,11 +126,15 @@ public class UserService {
     }
 
     @Transactional
-    public void stopTimer() {
-        userRepository.stopTimer();
+    public void stopTimer(Long second) {
+        userRepository.stopTimer(second);
     }
 
     public Page<LankResponse> rank(Pageable pageable) {
         return userRepository.rank(pageable);
+    }
+
+    public Long getSecond() {
+        return userRepository.getSecond();
     }
 }

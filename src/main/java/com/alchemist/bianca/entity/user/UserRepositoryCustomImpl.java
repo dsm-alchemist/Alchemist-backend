@@ -35,10 +35,15 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public void stopTimer() {
+    public void stopTimer(Long second) {
         queryFactory
                 .update(user)
                 .set(user.is_stop, true)
+                .where(user.email.eq(userFacade.getEmail()))
+                .execute();
+        queryFactory
+                .update(user)
+                .set(user.second, second)
                 .where(user.email.eq(userFacade.getEmail()))
                 .execute();
     }
@@ -80,5 +85,14 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                 .execute();
         entityManager.flush();
         entityManager.clear();
+    }
+
+    @Override
+    public Long getSecond() {
+        return queryFactory
+                .select(user.second)
+                .from(user)
+                .where(user.email.eq(userFacade.getEmail()))
+                .fetchOne();
     }
 }
