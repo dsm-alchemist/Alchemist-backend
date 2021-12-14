@@ -32,13 +32,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
 
-    public ResponseEntity<FollowCountResponse> getFollowCount() {
+    public ResponseEntity<FollowCountResponse> getFollowCount(String email) {
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         Date time = new Date();
         String date = format.format(time);
-        int following = followRepository.getFollowingList(userFacade.getEmail()).size();
-        int follower = followRepository.getFollowerList(userFacade.getEmail()).size();
-        int taskCount = taskRepository.getTaskList(userFacade.getEmail(), date, false).size();
+        Long following = followRepository.followingCount(email);
+        Long follower = followRepository.followerCount(email);
+        Long taskCount = taskRepository.taskCount(email, date);
         return new ResponseEntity<>(new FollowCountResponse(
                 following,
                 follower,
@@ -59,12 +59,12 @@ public class UserService {
     }
 
     public ResponseEntity<List<UserListResponse>> getFollowersList() {
-        List<String> following = followRepository.getFollowingListEmail(userFacade.getEmail());
+        List<String> myFollowing = followRepository.getFollowingEmailList(userFacade.getEmail());
         List<UserListResponse> followers = followRepository.getFollowerList(userFacade.getEmail())
                 .stream().map(follower -> UserListResponse.builder()
                         .userName(follower.getFollower().getName())
                         .userEmail(follower.getFollower().getEmail())
-                        .isFollowing(following.contains(follower.getFollower().getEmail()))
+                        .isFollowing(myFollowing.contains(follower.getFollower().getEmail()))
                         .build())
                 .collect(Collectors.toList());
 
@@ -72,12 +72,12 @@ public class UserService {
     }
 
     public ResponseEntity<List<UserListResponse>> getUsersList() {
-        List<String> following = followRepository.getFollowingListEmail(userFacade.getEmail());
+        List<String> myFollowing = followRepository.getFollowingEmailList(userFacade.getEmail());
         List<UserListResponse> users = userRepository.findAll()
                 .stream().map(user -> UserListResponse.builder()
                         .userName(user.getName())
                         .userEmail(user.getEmail())
-                        .isFollowing(following.contains(user.getEmail()))
+                        .isFollowing(myFollowing.contains(user.getEmail()))
                         .build())
                 .collect(Collectors.toList());
 

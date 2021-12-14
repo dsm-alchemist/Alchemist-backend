@@ -26,9 +26,9 @@ public class UserController {
     private final UserService userService;
     private final TaskService taskService;
 
-    @GetMapping("/follow")
-    public ResponseEntity<FollowCountResponse> getFollowCount() {
-        return userService.getFollowCount();
+    @GetMapping("/follow/{email}")
+    public ResponseEntity<FollowCountResponse> getFollowCount(@PathVariable("email") String email) {
+        return userService.getFollowCount(email);
     }
 
     @GetMapping("/following")
@@ -74,8 +74,9 @@ public class UserController {
     }
 
     @PutMapping("/timer")
-    public void stopTimer() {
+    public Long stopTimer(@RequestBody @Valid TimerRequest time) {
         userService.stopTimer();
+        return time.getTime();
     }
 
     @GetMapping("/rank")
