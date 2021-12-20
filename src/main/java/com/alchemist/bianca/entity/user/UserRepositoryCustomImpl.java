@@ -82,6 +82,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                 .update(user)
                 .set(user.is_stop, true)
                 .set(user.timer, 0L)
+                .set(user.second, 0L)
                 .execute();
         entityManager.flush();
         entityManager.clear();
