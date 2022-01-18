@@ -22,18 +22,8 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private int redisPort;
 
-    @Value("${spring.redis.password}")
-    private String redisPassword;
-
     @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration(redisHost, redisPort);  // 단일 인스턴스로 redis 구현
-        if(redisPassword != null && !redisPassword.isBlank())
-            redisConfig.setPassword(redisPassword);
-        LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
-                .commandTimeout(Duration.ofSeconds(1))
-                .shutdownTimeout(Duration.ZERO)
-                .build();
-        return new LettuceConnectionFactory(redisConfig, clientConfig);
+    RedisConnectionFactory redisConnectionFactory() {
+        return new LettuceConnectionFactory(redisHost, redisPort);
     }
 }
