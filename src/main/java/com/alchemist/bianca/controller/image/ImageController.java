@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImageController {
     private final ImageService imageService;
 
-    @PostMapping
+    @PostMapping("/image")
     @ResponseStatus(HttpStatus.CREATED)
     SaveImageResponse attachment(@RequestParam("file") MultipartFile file) {
         return imageService.saveAttachment(file);
