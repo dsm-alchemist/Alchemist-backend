@@ -20,7 +20,9 @@ public enum ErrorCode {
     UNLIKE_CODE(400, "Unlike code"),
     CREDENTIALS_NOT_FOUND(401, "Credentials not found"),
     TASK_NOT_FOUND(404, "Task not found"),
-    STORAGE_NOT_FOUND(404, "Storage not found");
+    STORAGE_NOT_FOUND(404, "Storage not found"),
+    FILE_SAVE_FAILED(400, "File save Failed"),
+    UNEXPECTED_ERROR(500, "Unexpected Error");
 
     private final int status;
     private final String message;
