@@ -23,7 +23,7 @@ spring:
   mail:
     title: ${MAIL_TITLE}
     exp: ${MAIL_EXP}
-    host: ${SMTP_HOST}v
+    host: ${SMTP_HOST}
     port: ${SMTP_PORT}
     username: ${SMTP_ADDRESS}
     password: ${SMTP_PASSWORD}
