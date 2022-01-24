@@ -1,6 +1,7 @@
 package com.alchemist.bianca.entity.user;
 
 import com.alchemist.bianca.entity.follow.Follow;
+import com.alchemist.bianca.entity.image.Image;
 import com.alchemist.bianca.entity.storage.Storage;
 import com.alchemist.bianca.entity.task.Task;
 import lombok.*;
@@ -52,6 +53,10 @@ public class User implements Serializable, UserDetails {
 
     @OneToMany(mappedBy = "email", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Storage> storages = new ArrayList<>();
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     @Override
     public int hashCode() {
