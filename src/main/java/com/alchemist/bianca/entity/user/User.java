@@ -54,6 +54,7 @@ public class User implements Serializable, UserDetails {
     @OneToMany(mappedBy = "email", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Storage> storages = new ArrayList<>();
 
+    @Setter
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id")
     private Image image;
