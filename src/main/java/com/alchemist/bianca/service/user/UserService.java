@@ -54,7 +54,6 @@ public class UserService {
                         .isFollowing(true)
                         .build())
                 .collect(Collectors.toList());
-        System.out.println("CD Test");
         return new ResponseEntity<>(followings, HttpStatus.OK);
     }
 
