@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
-EXPOSE 8080
+FROM eclipse-temurin:17-jre-focal
+EXPOSE 8889
 COPY ./build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
